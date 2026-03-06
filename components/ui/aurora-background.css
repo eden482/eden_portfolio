@@ -1,0 +1,133 @@
+/*
+ * aurora-background.css
+ * Vanilla CSS port of @/components/ui/aurora-background.tsx (shadcn/aceternity)
+ *
+ * Usage:
+ *   Add class="aurora-hero" to the section you want animated.
+ *   Place <div class="aurora-bg"><div class="aurora-layer"></div></div>
+ *   as the FIRST child of that section (so it renders behind content).
+ */
+
+/* ── Keyframe (mirrors tailwind.config aurora animation) ──────────────── */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+/* ── Wrapper: makes the host section a positioning context ─────────────── */
+.aurora-hero {
+  position: relative;
+  /* No overflow:hidden here — lets .aurora-bg escape the max-width container */
+}
+
+/*
+ * ── Clip container ───────────────────────────────────────────────────────
+ * Uses the viewport-escape technique:
+ *   left: 50% + translateX(-50%) + width: 100vw
+ * so the aurora spans the full browser width regardless of the section's
+ * max-width constraint. overflow:hidden clips the -inset-[10px] expansion.
+ */
+.aurora-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/*
+ * ── Primary aurora layer ─────────────────────────────────────────────────
+ * Mirrors the className block inside <div> in AuroraBackground:
+ *   [--white-gradient:...] [--aurora:...]
+ *   [background-image:var(--white-gradient),var(--aurora)]
+ *   [background-size:300%,_200%]
+ *   filter blur-[10px] invert
+ *   opacity-50 will-change-transform
+ *   [mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]
+ */
+.aurora-layer {
+  --white:      #ffffff;
+  --copper:     rgba(181, 119, 63, 0.6);
+  --gold:       #DCC878;
+  --gold-light: #EDE0A0;
+  --off-white:  #F6F4F1;
+
+  position: absolute;
+  inset: -10px;
+  opacity: 0.85;
+  will-change: transform;
+  pointer-events: none;
+
+  background-image:
+    repeating-linear-gradient(
+      100deg,
+      var(--white)      0%,
+      var(--white)      7%,
+      transparent       10%,
+      transparent       12%,
+      var(--white)      16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--copper)     0%,
+      var(--gold)       20%,
+      var(--gold-light) 40%,
+      var(--off-white)  60%,
+      var(--copper)     80%
+    );
+
+  background-size:     300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+
+  filter: blur(20px);
+
+  -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+          mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+
+  animation: aurora 60s linear infinite;
+}
+
+/* ── After-layer: screen blend keeps warm tones additive */
+.aurora-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    repeating-linear-gradient(
+      100deg,
+      var(--white)      0%,
+      var(--white)      7%,
+      transparent       10%,
+      transparent       12%,
+      var(--white)      16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--copper)     0%,
+      var(--gold)       20%,
+      var(--gold-light) 40%,
+      var(--off-white)  60%,
+      var(--copper)     80%
+    );
+
+  background-size:       200%, 100%;
+  background-attachment: fixed;
+  mix-blend-mode:        screen;
+
+  animation: aurora 60s linear infinite;
+}
+
+/* ── Keep hero content above the aurora layer ───────────────────────────── */
+.aurora-hero > *:not(.aurora-bg) {
+  position: relative;
+  z-index: 1;
+}

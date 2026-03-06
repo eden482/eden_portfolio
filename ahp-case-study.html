@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHP Website UX Redesign — Eden Su</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #1B191B;
+      --gray:       #545554;
+      --copper:     #B5773F;
+      --dark-brown: #472E13;
+      --gold:       #DCC878;
+      --white:      #FFFFFF;
+      --off-white:  #F6F4F1;
+      --placeholder: #E2E0DD;
+      --placeholder-dark: #D0CEC9;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAVIGATION ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3.5rem;
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .nav-name {
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-center {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-email {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      padding: 0.5rem 1.4rem;
+      border: 1.5px solid var(--black);
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-email:hover { background: var(--black); color: var(--white); }
+
+    /* ─── CASE STUDY WRAPPER ─────────────────────────────────────── */
+    .cs-page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ─── PLACEHOLDER UTILITY ────────────────────────────────────── */
+    .ph {
+      background: var(--placeholder);
+      border-radius: 8px;
+      display: block;
+      width: 100%;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    .cs-hero {
+      padding: 5rem 0 4rem;
+      text-align: center;
+    }
+
+    .cs-hero-mockups {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .cs-hero-img {
+      width: 100%;
+      max-width: 780px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .cs-hero-desc {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .cs-hero-desc h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+    .cs-hero-desc p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    /* ─── SECTION BLOCK (grey rounded) ──────────────────────────── */
+    .cs-block {
+      background: var(--off-white);
+      border-radius: 20px;
+      padding: 5.5rem 5rem 5rem;
+      margin-bottom: 5rem;
+    }
+
+    .cs-block-title {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 1.75rem;
+      margin-bottom: 0;
+    }
+
+    /* ─── BEFORE ─────────────────────────────────────────────────── */
+    .before-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .before-grid .ph { height: 320px; }
+    .before-img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* ─── COMPETITOR ANALYSIS ────────────────────────────────────── */
+    .comp-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* ─── DESIGN SYSTEM & WIREFRAME ──────────────────────────────── */
+    .ds-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .ds-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .ds-right {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .wf-img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* ─── DESKTOP SCREENS ────────────────────────────────────────── */
+    .ph-desk {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* ─── MOBILE SCREENS GRID ────────────────────────────────────── */
+    .mobile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .mobile-grid .ph-mobile {
+      border-radius: 12px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 1.6rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── SCROLL PROGRESS ────────────────────────────────────────── */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--copper);
+      width: 0%;
+      z-index: 999;
+      pointer-events: none;
+      transition: width 0.08s linear;
+    }
+
+    /* ─── REVEAL ─────────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--delay, 0s);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.75rem; }
+      .nav-center { display: none; }
+      .cs-page { padding: 0 1.25rem 4rem; }
+      .cs-hero { padding: 3.5rem 0 3rem; }
+
+      .cs-hero-img { max-width: 100%; }
+
+      .cs-block { padding: 3rem 2rem 2.75rem; margin-bottom: 3rem; }
+
+      .before-grid { grid-template-columns: 1fr; }
+      .before-grid .ph { height: 240px; }
+      .before-img { height: 240px; }
+
+.ds-grid { grid-template-columns: 1fr; }
+      .ds-right { grid-template-columns: repeat(3, 1fr); }
+      .wf-img { height: 220px; }
+
+
+      .mobile-grid { grid-template-columns: repeat(3, 1fr); }
+
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.4rem 1.75rem; }
+    }
+
+    @media (max-width: 600px) {
+      .mobile-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── SCROLL PROGRESS ── -->
+  <div class="scroll-progress" id="scroll-bar"></div>
+
+  <!-- ── NAVIGATION (from homepage) ── -->
+  <nav>
+    <a href="index.html" class="nav-name">Eden Su</a>
+    <span class="nav-center">Web Designer&nbsp;/&nbsp;UX UI Developer</span>
+    <a href="https://mail.google.com/mail/?view=cm&to=eden.su7@gmail.com" target="_blank" rel="noopener" class="nav-email">Email Me</a>
+  </nav>
+
+  <!-- ── CASE STUDY CONTENT ── -->
+  <div class="cs-page">
+
+    <!-- 1. HERO -->
+    <section class="cs-hero">
+      <div class="cs-hero-mockups reveal">
+        <img
+          src="brand_assets/3978418.jpg"
+          alt="America's Home Place mobile website redesign across multiple screens"
+          class="cs-hero-img"
+        />
+      </div>
+      <div class="cs-hero-desc reveal" style="--delay: 0.15s">
+        <h1>America's Home Place — Website UX Redesign</h1>
+        <p>America's Home Place builds custom homes across the Southeast, but their website wasn't keeping pace with how prospective buyers research and evaluate builders. I'm leading a full redesign focused on navigation clarity, information architecture, and mobile experience — restructuring content pathways so users can move from initial interest to meaningful engagement without unnecessary friction.</p>
+      </div>
+    </section>
+
+    <!-- 2. BEFORE -->
+    <div class="cs-block reveal">
+      <div class="before-grid">
+        <img src="brand_assets/before-homepage.png" alt="Before: AHP homepage" class="before-img" />
+        <img src="brand_assets/before-plan-page.png" alt="Before: AHP house plan page" class="before-img" />
+      </div>
+      <p class="cs-block-title">Before</p>
+    </div>
+
+    <!-- 3. COMPETITOR ANALYSIS -->
+    <div class="cs-block reveal">
+      <img src="brand_assets/competitor_analysis.png" alt="Competitor analysis" class="comp-img" />
+      <p class="cs-block-title">Competitor Analysis</p>
+    </div>
+
+    <!-- 4. DESIGN SYSTEM & WIREFRAME -->
+    <div class="cs-block reveal">
+      <div class="ds-grid">
+        <div class="ds-left">
+          <img src="brand_assets/design_system.png" alt="Design system" class="ds-img" />
+        </div>
+        <div class="ds-right">
+          <img src="brand_assets/Homepage-wireframe.png" alt="Homepage wireframe" class="wf-img" />
+          <img src="brand_assets/House-plan-wireframe.png" alt="House plan listing wireframe" class="wf-img" />
+          <img src="brand_assets/Individual-hous-plan-wireframe.png" alt="Individual house plan wireframe" class="wf-img" />
+        </div>
+      </div>
+      <p class="cs-block-title">Design System and Wireframe</p>
+    </div>
+
+    <!-- 5. FINAL UI SCREENS (desktop) -->
+    <div class="cs-block reveal">
+      <div class="before-grid">
+        <img src="brand_assets/desktop-homepage.jpg" alt="Final UI homepage desktop" class="ph-desk" />
+        <img src="brand_assets/desktop-homepage2.jpg" alt="Final UI homepage desktop 2" class="ph-desk" />
+      </div>
+      <p class="cs-block-title">Final UI — Desktop</p>
+    </div>
+
+    <!-- 6. MOBILE UI SCREENS -->
+    <div class="cs-block reveal">
+      <div class="mobile-grid">
+        <img src="brand_assets/mobile-homepage.jpg" alt="Final UI mobile — top" class="ph-mobile" />
+        <img src="brand_assets/mobile-homepage2.jpg" alt="Final UI mobile — mid" class="ph-mobile" />
+        <img src="brand_assets/mobile-homepage3.jpg" alt="Final UI mobile — bottom" class="ph-mobile" />
+      </div>
+      <p class="cs-block-title">Final UI — Mobile</p>
+    </div>
+
+  </div><!-- /cs-page -->
+
+  <!-- ── FOOTER (from homepage) ── -->
+  <footer>
+    <p>&copy; 2026 Eden Su. All rights reserved.</p>
+    <p>Web Designer &nbsp;/&nbsp; UX UI Developer</p>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    const bar = document.getElementById('scroll-bar');
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (window.scrollY / max * 100) + '%';
+    }, { passive: true });
+
+    // Scroll-reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
